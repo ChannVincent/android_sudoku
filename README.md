@@ -2,12 +2,8 @@
 
 ## Summary
 
-Simple sudoku application to kill time in the subway.
-Android 16+
-
-## Demo
-
-![Screenshot](demo_sudoku.gif)
+Simple sudoku application to kill time in the subway.  
+Android 16+  
 
 ## Roadmap
 
@@ -17,3 +13,7 @@ Android 16+
 - SU-04 : back function
 - SU-05 : list of sudoku
 - SU-06 : download sudoku from server 
+
+## Demo
+
+![Screenshot](demo_sudoku.gif)
