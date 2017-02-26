@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<selector xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <!-- DEFAULT -->
+    <item>
+        <shape android:shape="rectangle">
+            <stroke
+                android:color="@color/colorPrimary"
+                android:width="@dimen/keypad_stroke_width"/>
+            <corners
+                android:radius="@dimen/keypad_corner_radius"/>
+            <solid
+                android:color="@color/colorPrimary"/>
+        </shape>
+    </item>
+
+</selector>

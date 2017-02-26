@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="colorPrimary">#56789A</color>
+    <color name="colorPrimaryDark">#44607b</color>
+    <color name="colorAccent">#56789A</color>
+    <color name="defaultBackground">#ffffff</color>
+
+
+    <!-- board -->
+    <color name="colorBoardBorder">#22666666</color>
+
+    <!-- text -->
+    <color name="colorTextWhite">#ffffff</color>
+    <color name="colorTextBlack">#333333</color>
+
+    <!-- keyboard -->
+    <color name="colorPrimaryTranslucent">#7756789A</color>
+    <color name="colorPrimaryDarkTranslucent">#7744607b</color>
+    <color name="colorPrimaryHighTranslucent">#2256789A</color>
+    <color name="colorPrimaryDarkHighTranslucent">#2244607b</color>
+
+</resources>

@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="@color/defaultBackground">
+
+    <!-- BOARD -->
+    <com.google.android.flexbox.FlexboxLayout
+        android:id="@+id/flex_board"
+        android:layout_marginLeft="@dimen/board_margin"
+        android:layout_marginTop="@dimen/board_margin"
+        android:layout_marginRight="@dimen/board_margin"
+        android:layout_marginBottom="@dimen/board_margin"
+        android:paddingLeft="1dp"
+        android:paddingTop="1dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:flexWrap="wrap"
+        app:alignItems="flex_start"
+        app:alignContent="flex_start"/>
+
+    <!-- KEYPAD -->
+    <com.google.android.flexbox.FlexboxLayout
+        android:id="@+id/flex_keypad"
+        android:layout_marginLeft="@dimen/keypad_margin"
+        android:layout_marginTop="@dimen/keypad_top_margin"
+        android:layout_marginRight="@dimen/keypad_margin"
+        android:layout_marginBottom="@dimen/keypad_margin"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:flexWrap="wrap"
+        app:alignItems="flex_start"
+        app:alignContent="flex_start"/>
+
+</LinearLayout>
