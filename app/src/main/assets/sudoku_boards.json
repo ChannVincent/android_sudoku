@@ -3,6 +3,7 @@
 		{
 			"idx":1,
 			"title":"Tiger tamed",
+			"icon":"bronze.png",
 			"difficulty":1,
 			"board": 
 				[6,0,0,0,3,0,0,0,0,
@@ -18,6 +19,7 @@
 		{
 			"idx":2,
 			"title":"Tiger savannah",
+			"icon":"platinium.png",
 			"difficulty":2,
 			"board": 
 				[1,5,0,0,9,0,4,0,0,

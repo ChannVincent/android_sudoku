@@ -9,6 +9,7 @@ public class Board {
 
     public int idx;
     public String title;
+    public String icon;
     public int difficulty;
     public List<Integer> board;
 
