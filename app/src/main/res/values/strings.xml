@@ -1,3 +1,8 @@
 <resources>
     <string name="app_name">Sudoku</string>
+    <string name="play_now">Jouez à Sudoku</string>
+    <string name="difficulty">Difficulté : </string>
+    <string name="value">Valeur : </string>
+    <string name="progress">Progression : </string>
+    <string name="stars">étoiles</string>
 </resources>

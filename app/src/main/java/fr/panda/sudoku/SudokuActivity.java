@@ -56,7 +56,8 @@ public class SudokuActivity extends AppCompatActivity implements View.OnClickLis
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_sudoku);
-        setCurrentBoard();
+        setCurrentBoard(getIntent().getExtras());
+
         populateBoard();
         populateKeypad();
         disableKeyboardValues();
@@ -73,23 +74,23 @@ public class SudokuActivity extends AppCompatActivity implements View.OnClickLis
         actionBar.setTitle(currentBoard.title);
         switch (currentBoard.difficulty) {
             case 1:
-                actionBar.setSubtitle(Html.fromHtml("<small>&nbsp;" + "Apprentice level" + "</small>"));
+                actionBar.setSubtitle(Html.fromHtml("<small>&nbsp;" + "Niveau débutant (1 étoile)" + "</small>"));
                 break;
 
             case 2:
-                actionBar.setSubtitle(Html.fromHtml("<small>&nbsp;" + "Comfirmed level" + "</small>"));
+                actionBar.setSubtitle(Html.fromHtml("<small>&nbsp;" + "Niveau confirmé (2 étoiles)" + "</small>"));
                 break;
 
             case 3:
-                actionBar.setSubtitle(Html.fromHtml("<small>&nbsp;" + "Master level" + "</small>"));
+                actionBar.setSubtitle(Html.fromHtml("<small>&nbsp;" + "Niveau maître (3 étoiles)" + "</small>"));
                 break;
 
             case 4:
-                actionBar.setSubtitle(Html.fromHtml("<small>&nbsp;" + "Legendary level" + "</small>"));
+                actionBar.setSubtitle(Html.fromHtml("<small>&nbsp;" + "Niveau légendaire (4 étoiles)" + "</small>"));
                 break;
 
             case 5:
-                actionBar.setSubtitle(Html.fromHtml("<small>&nbsp;" + "God level" + "</small>"));
+                actionBar.setSubtitle(Html.fromHtml("<small>&nbsp;" + "Niveau dieu (5 étoiles)" + "</small>"));
                 break;
         }
     }
@@ -124,20 +125,33 @@ public class SudokuActivity extends AppCompatActivity implements View.OnClickLis
 
     @Override
     public void onBackPressed() {
-        //super.onBackPressed();
-        Toast.makeText(this, "back", Toast.LENGTH_LONG).show();
+        super.onBackPressed();
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+
     }
 
     /*
         Board
          */
-    protected void setCurrentBoard() {
-        SudokuBoards sudokuBoards = (SudokuBoards) Utils.parseJson("sudoku_boards.json", this, SudokuBoards.class);
+    protected void setCurrentBoard(Bundle bundle) {
+        try {
+            currentBoard = (Board) bundle.getSerializable(Board.BUNDLE_KEY_BOARD);
+        }
+        catch (Exception e) {
+            e.printStackTrace();
+        }
 
-        // sudoku_boards.json invalid => break board populating
-        if (sudokuBoards != null && sudokuBoards.boards == null)
-            return;
-        currentBoard = sudokuBoards.boards.get(0);
+        if (currentBoard == null) {
+            SudokuBoards sudokuBoards = (SudokuBoards) Utils.parseJson("sudoku_boards.json", this, SudokuBoards.class);
+            if (sudokuBoards != null && sudokuBoards.boards == null) {
+                return;
+            }
+            currentBoard = sudokuBoards.boards.get(0);
+        }
     }
 
     protected int boardWidthPx = 0;
@@ -491,6 +505,7 @@ public class SudokuActivity extends AppCompatActivity implements View.OnClickLis
         KeypadButton keypadButtonProgress = (KeypadButton) findViewById(KEYPAD_PROGRESS_IDX);
         int maxProgress = 100;
         int progress = boardIdxManager.getProgressOn100(boardButtonList);
+        // TODO save progress here
         keypadButtonProgress.setText(progress + "%");
         if (progress >= maxProgress) {
             showSuccess();
@@ -516,10 +531,11 @@ public class SudokuActivity extends AppCompatActivity implements View.OnClickLis
                         titleView.setText(Html.fromHtml("<strong>Victory !</strong>"));
 
                         TextView infoView1 = (TextView) view.findViewById(R.id.info1);
-                        infoView1.setText(Html.fromHtml("You have won <strong>3 stars</strong>,"));
+                        infoView1.setText(Html.fromHtml("You have won <strong>" + currentBoard.difficulty + " stars</strong>,"));
 
                         TextView infoView2 = (TextView) view.findViewById(R.id.info2);
-                        infoView2.setText(Html.fromHtml("Your total is now <strong>6 stars</strong> !"));
+                        // TODO get total count of stars
+                        infoView2.setText(Html.fromHtml("Your total is now <strong>" + "" +" stars</strong> !"));
                     }
                 });
     }

@@ -1,9 +1,13 @@
 package fr.panda.sudoku;
 
+import android.content.Intent;
 import android.os.Bundle;
+import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
+import android.text.Html;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.RatingBar;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
@@ -36,6 +40,14 @@ public class HomeActivity extends AppCompatActivity implements VCListListener {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
         setListView();
+        setActionBar();
+    }
+
+    protected void setActionBar() {
+        ActionBar actionBar = getSupportActionBar();
+        actionBar.setTitle(getString(R.string.play_now));
+        // TODO compter le nombre de stars
+        actionBar.setSubtitle(Html.fromHtml("<small>&nbsp;" + "Vous avez : " + "<strong>4 étoiles</strong>" + "</small>"));
     }
 
     protected void setListView() {
@@ -48,19 +60,38 @@ public class HomeActivity extends AppCompatActivity implements VCListListener {
         SudokuBoards sudokuBoards = (SudokuBoards) Utils.parseJson("sudoku_boards.json", this, SudokuBoards.class);
         int position = 0;
         for (Board board : sudokuBoards.boards) {
-            dataViews.add(new VCDataView(position, R.layout.cell_title, board.title, board.icon));
+            dataViews.add(new VCDataView(position, R.layout.cell_home, board));
             position++;
         }
         return dataViews;
     }
 
     @Override
-    public void onBindViewHolder(View itemView, VCDataView dataView) {
-        if (dataView.resourceViewIdx == R.layout.cell_title) {
+    public void onBindViewHolder(View itemView, final VCDataView dataView) {
+        if (dataView.resourceViewIdx == R.layout.cell_home && dataView.board != null) {
+            itemView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    Intent intent = new Intent(HomeActivity.this, SudokuActivity.class);
+                    intent.putExtra(Board.BUNDLE_KEY_BOARD, dataView.board);
+                    startActivity(intent);
+                }
+            });
+
             TextView titleView = (TextView) itemView.findViewById(R.id.cell_title);
-            titleView.setText(dataView.title);
+            titleView.setText(dataView.board.title);
+
+            // TODO save progress
+            TextView subtitleView = (TextView) itemView.findViewById(R.id.cell_subtitle);
+            subtitleView.setText(getString(R.string.progress) + " 0" + "% \n"
+                    + getString(R.string.value) + " " + dataView.board.difficulty + " " + getString(R.string.stars));
+
+            RatingBar ratingView = (RatingBar) itemView.findViewById(R.id.cell_rating);
+            ratingView.setRating(dataView.board.difficulty);
+
             ImageView iconView = (ImageView) itemView.findViewById(R.id.cell_image);
-            Glide.with(HomeActivity.this).load("file://android_asset/" + dataView.icon).into(iconView);
+            Glide.with(HomeActivity.this).load("file:///android_asset/" + dataView.board.icon).into(iconView);
+
         }
     }
 }

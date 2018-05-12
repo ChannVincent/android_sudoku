@@ -1,12 +1,14 @@
 package fr.panda.sudoku.data;
 
+import java.io.Serializable;
 import java.util.List;
 
 /**
  * Created by vincentchann on 04/08/16.
  */
-public class Board {
+public class Board implements Serializable {
 
+    static public String BUNDLE_KEY_BOARD = "bundle key board";
     public int idx;
     public String title;
     public String icon;
