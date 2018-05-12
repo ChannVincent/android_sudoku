@@ -16,10 +16,12 @@ import java.util.ArrayList;
 import java.util.List;
 
 import fr.panda.sudoku.data.Board;
+import fr.panda.sudoku.data.SaveBoard;
 import fr.panda.sudoku.data.SudokuBoards;
 import fr.panda.sudoku.list.VCDataView;
 import fr.panda.sudoku.list.VCListListener;
 import fr.panda.sudoku.list.VCListView;
+import fr.panda.sudoku.utils.SharedPref;
 import fr.panda.sudoku.utils.Utils;
 
 /**
@@ -81,9 +83,16 @@ public class HomeActivity extends AppCompatActivity implements VCListListener {
             TextView titleView = (TextView) itemView.findViewById(R.id.cell_title);
             titleView.setText(dataView.board.title);
 
-            // TODO save progress
+            int progress = 0;
+            String jsonSaveBoard = SharedPref.getInstance(this).getStringValue(SaveBoard.PREF_KEY_PREFIX + dataView.board.idx, null);
+            if (jsonSaveBoard != null) {
+                SaveBoard saveBoard = SaveBoard.fromJson(jsonSaveBoard);
+                if (saveBoard != null) {
+                    progress = saveBoard.progression;
+                }
+            }
             TextView subtitleView = (TextView) itemView.findViewById(R.id.cell_subtitle);
-            subtitleView.setText(getString(R.string.progress) + " 0" + "% \n"
+            subtitleView.setText(getString(R.string.progress) + " " + progress + "% \n"
                     + getString(R.string.value) + " " + dataView.board.difficulty + " " + getString(R.string.stars));
 
             RatingBar ratingView = (RatingBar) itemView.findViewById(R.id.cell_rating);

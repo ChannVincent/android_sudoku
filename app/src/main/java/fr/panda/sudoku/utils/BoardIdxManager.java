@@ -337,4 +337,12 @@ public class BoardIdxManager {
         // return progress on 100
         return Math.round((float)progressButtonIdxList.size() / (float)unlockedButtonCount * 100);
     }
+
+    public List<Integer> getBoard(List<BoardButton> boardButtonList) {
+        List<Integer> result = new ArrayList<>();
+        for(BoardButton boardButton : boardButtonList) {
+            result.add(boardButton.getValue());
+        }
+        return result;
+    }
 }

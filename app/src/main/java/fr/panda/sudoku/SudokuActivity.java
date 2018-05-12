@@ -18,8 +18,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 import fr.panda.sudoku.data.Board;
+import fr.panda.sudoku.data.SaveBoard;
 import fr.panda.sudoku.data.SudokuBoards;
 import fr.panda.sudoku.utils.BoardIdxManager;
+import fr.panda.sudoku.utils.SharedPref;
 import fr.panda.sudoku.utils.Utils;
 import fr.panda.sudoku.widget.BoardButton;
 import fr.panda.sudoku.widget.KeypadButton;
@@ -64,6 +66,9 @@ public class SudokuActivity extends AppCompatActivity implements View.OnClickLis
 
         setTitleActionBar();
         setBackActionbar();
+
+        showErrors();
+        showProgress();
     }
 
     /*
@@ -128,23 +133,30 @@ public class SudokuActivity extends AppCompatActivity implements View.OnClickLis
         super.onBackPressed();
     }
 
-    @Override
-    protected void onDestroy() {
-        super.onDestroy();
-
-    }
-
     /*
-        Board
-         */
+    Board
+     */
     protected void setCurrentBoard(Bundle bundle) {
-        try {
-            currentBoard = (Board) bundle.getSerializable(Board.BUNDLE_KEY_BOARD);
-        }
-        catch (Exception e) {
-            e.printStackTrace();
+        // get fresh board based on extra sent from list
+        if (currentBoard == null) {
+            try {
+                currentBoard = (Board) bundle.getSerializable(Board.BUNDLE_KEY_BOARD);
+            }
+            catch (Exception e) {
+                e.printStackTrace();
+            }
+
+            // get saved board from preferences
+            String saveBoardJson = SharedPref.getInstance(this).getStringValue(SaveBoard.PREF_KEY_PREFIX + currentBoard.idx, null);
+            if (saveBoardJson != null) {
+                SaveBoard saveBoard = SaveBoard.fromJson(saveBoardJson);
+                if (saveBoard != null) {
+                    currentBoard.board = saveBoard.board;
+                }
+            }
         }
 
+        // last solution : get 1st board available
         if (currentBoard == null) {
             SudokuBoards sudokuBoards = (SudokuBoards) Utils.parseJson("sudoku_boards.json", this, SudokuBoards.class);
             if (sudokuBoards != null && sudokuBoards.boards == null) {
@@ -505,7 +517,11 @@ public class SudokuActivity extends AppCompatActivity implements View.OnClickLis
         KeypadButton keypadButtonProgress = (KeypadButton) findViewById(KEYPAD_PROGRESS_IDX);
         int maxProgress = 100;
         int progress = boardIdxManager.getProgressOn100(boardButtonList);
-        // TODO save progress here
+
+        // save progress
+        SharedPref.getInstance(this).setValue(SaveBoard.PREF_KEY_PREFIX + currentBoard.idx,
+                new SaveBoard(boardIdxManager.getBoard(boardButtonList), currentBoard.idx, progress).toJson());
+
         keypadButtonProgress.setText(progress + "%");
         if (progress >= maxProgress) {
             showSuccess();
@@ -535,7 +551,7 @@ public class SudokuActivity extends AppCompatActivity implements View.OnClickLis
 
                         TextView infoView2 = (TextView) view.findViewById(R.id.info2);
                         // TODO get total count of stars
-                        infoView2.setText(Html.fromHtml("Your total is now <strong>" + "" +" stars</strong> !"));
+                        infoView2.setText(Html.fromHtml("Your total is now <strong>" + "" + " stars</strong> !"));
                     }
                 });
     }
