@@ -44,7 +44,7 @@
                 android:layout_marginTop="3dp">
 
                 <TextView
-                    android:text="@string/difficulty"
+                    android:text="@string/value"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content" />
 

@@ -10,10 +10,12 @@ public class VCDataView {
     public int idx;
     public int resourceViewIdx;
     public Board board;
+    public int progress;
 
-    public VCDataView(int idx, int resourceViewIdx, Board board) {
+    public VCDataView(int idx, int resourceViewIdx, Board board, int progress) {
         this.idx = idx;
         this.resourceViewIdx = resourceViewIdx;
         this.board = board;
+        this.progress = progress;
     }
 }

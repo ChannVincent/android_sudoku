@@ -83,8 +83,18 @@ public class HomeActivity extends AppCompatActivity implements VCListListener {
         SudokuBoards sudokuBoards = (SudokuBoards) Utils.parseJson("sudoku_boards.json", this, SudokuBoards.class);
         int position = 0;
         for (Board board : sudokuBoards.boards) {
-            dataViews.add(new VCDataView(position, R.layout.cell_home, board));
-            position++;
+            int progress = 0;
+            String jsonSaveBoard = SharedPref.getInstance(this).getStringValue(SaveBoard.PREF_KEY_PREFIX + board.idx, null);
+            if (jsonSaveBoard != null) {
+                SaveBoard saveBoard = SaveBoard.fromJson(jsonSaveBoard);
+                if (saveBoard != null) {
+                    progress = saveBoard.progression;
+                }
+            }
+            if (progress < 100) {
+                dataViews.add(new VCDataView(position, R.layout.cell_home, board, progress));
+                position++;
+            }
         }
         return dataViews;
     }
@@ -104,24 +114,14 @@ public class HomeActivity extends AppCompatActivity implements VCListListener {
             TextView titleView = (TextView) itemView.findViewById(R.id.cell_title);
             titleView.setText(dataView.board.title);
 
-            int progress = 0;
-            String jsonSaveBoard = SharedPref.getInstance(this).getStringValue(SaveBoard.PREF_KEY_PREFIX + dataView.board.idx, null);
-            if (jsonSaveBoard != null) {
-                SaveBoard saveBoard = SaveBoard.fromJson(jsonSaveBoard);
-                if (saveBoard != null) {
-                    progress = saveBoard.progression;
-                }
-            }
             TextView subtitleView = (TextView) itemView.findViewById(R.id.cell_subtitle);
-            subtitleView.setText(Html.fromHtml(getString(R.string.progress) + " <strong>" + progress + "%</strong><br/>"
-                    + getString(R.string.value) + " " + dataView.board.difficulty + " " + getString(R.string.stars)));
+            subtitleView.setText(Html.fromHtml(getString(R.string.progress) + " <strong>" + dataView.progress + "%</strong>"));
 
             RatingBar ratingView = (RatingBar) itemView.findViewById(R.id.cell_rating);
             ratingView.setRating(dataView.board.difficulty);
 
             ImageView iconView = (ImageView) itemView.findViewById(R.id.cell_image);
             Glide.with(HomeActivity.this).load("file:///android_asset/" + dataView.board.icon).into(iconView);
-
         }
     }
 }

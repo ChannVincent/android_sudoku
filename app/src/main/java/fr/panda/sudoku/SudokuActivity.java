@@ -1,6 +1,7 @@
 package fr.panda.sudoku;
 
 import android.content.DialogInterface;
+import android.graphics.drawable.Drawable;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -14,6 +15,7 @@ import android.widget.Toast;
 import com.google.android.flexbox.FlexboxLayout;
 import com.vistrav.pop.Pop;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -288,25 +290,13 @@ public class SudokuActivity extends AppCompatActivity implements View.OnClickLis
         keypadButton.setTextSize(getResources().getDimension(R.dimen.keypad_level_text_size) / Utils.getDp(this));
         keypadButton.setAllCaps(false);
 
-        // set functions
-        keypadButton.setValue(0);
-        switch (level) {
-            case 1:
-                keypadButton.setText("Logo Apprent.");
-                break;
-            case 2:
-                keypadButton.setText("Logo Comfirm.");
-                break;
-            case 3:
-                keypadButton.setText("Logo Master");
-                break;
-            case 4:
-                keypadButton.setText("Logo Legend.");
-                break;
-            case 5:
-                keypadButton.setText("Logo God");
-                break;
+        try {
+            Drawable drawable = Drawable.createFromStream(getAssets().open(currentBoard.icon), null);
+            keypadButton.setBackground(drawable);
+        } catch (IOException e) {
+            e.printStackTrace();
         }
+
         keypadButton.setId(KEYPAD_LEVEL_IDX);
         keypadButton.setOnClickListener(this);
 
