@@ -55,4 +55,8 @@ public class VCListView extends RecyclerView {
         this.vcAdapter = new VCAdapter(dataViews, vcListListener);
         this.columnNumber = columnNumber;
     }
+
+    public void reload(List<VCDataView> dataViews) {
+        vcAdapter.reload(dataViews);
+    }
 }

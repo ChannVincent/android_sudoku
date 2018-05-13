@@ -22,6 +22,11 @@ public class VCAdapter extends RecyclerView.Adapter<VCViewHolder> {
         this.vcListListener = vcListListener;
     }
 
+    public void reload(List<VCDataView> dataViews) {
+        this.dataViews = dataViews;
+        notifyDataSetChanged();
+    }
+
     /*
     Callbacks
      */

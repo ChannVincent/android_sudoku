@@ -70,7 +70,7 @@ public class HomeActivity extends AppCompatActivity implements VCListListener {
         VCListView listView = (VCListView) findViewById(R.id.list_view);
         if (reload) {
             if (listView.getAdapter() != null) {
-                listView.getAdapter().notifyDataSetChanged();
+                listView.reload(getDataViews());
             }
         }
         else {

@@ -37,6 +37,7 @@ public class SharedPref {
      * @param value value for that key
      */
     public void setValue(String key, String value) {
+        mSharedPreferencesEditor.remove(key);
         mSharedPreferencesEditor.putString(key, value);
         mSharedPreferencesEditor.commit();
     }
