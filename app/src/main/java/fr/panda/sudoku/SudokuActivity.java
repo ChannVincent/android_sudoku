@@ -22,6 +22,7 @@ import fr.panda.sudoku.data.SaveBoard;
 import fr.panda.sudoku.data.SudokuBoards;
 import fr.panda.sudoku.utils.BoardIdxManager;
 import fr.panda.sudoku.utils.SharedPref;
+import fr.panda.sudoku.utils.StarsManager;
 import fr.panda.sudoku.utils.Utils;
 import fr.panda.sudoku.widget.BoardButton;
 import fr.panda.sudoku.widget.KeypadButton;
@@ -120,7 +121,7 @@ public class SudokuActivity extends AppCompatActivity implements View.OnClickLis
 
             case R.id.help:
                 // TODO create activity help tutorial
-                Toast.makeText(this, "help section is in construction", Toast.LENGTH_LONG).show();
+                Toast.makeText(this, getString(R.string.in_construction), Toast.LENGTH_LONG).show();
                 return true;
 
             default:
@@ -547,11 +548,10 @@ public class SudokuActivity extends AppCompatActivity implements View.OnClickLis
                         titleView.setText(Html.fromHtml("<strong>Victory !</strong>"));
 
                         TextView infoView1 = (TextView) view.findViewById(R.id.info1);
-                        infoView1.setText(Html.fromHtml("You have won <strong>" + currentBoard.difficulty + " stars</strong>,"));
+                        infoView1.setText(Html.fromHtml(String.format(getString(R.string.you_have_won_x_stars), currentBoard.difficulty + "")));
 
                         TextView infoView2 = (TextView) view.findViewById(R.id.info2);
-                        // TODO get total count of stars
-                        infoView2.setText(Html.fromHtml("Your total is now <strong>" + "" + " stars</strong> !"));
+                        infoView2.setText(String.format(getString(R.string.you_have_x_stars), StarsManager.getStarsCount(SudokuActivity.this) + ""));
                     }
                 });
     }

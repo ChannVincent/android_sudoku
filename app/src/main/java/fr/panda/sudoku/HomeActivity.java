@@ -22,7 +22,10 @@ import fr.panda.sudoku.list.VCDataView;
 import fr.panda.sudoku.list.VCListListener;
 import fr.panda.sudoku.list.VCListView;
 import fr.panda.sudoku.utils.SharedPref;
+import fr.panda.sudoku.utils.StarsManager;
 import fr.panda.sudoku.utils.Utils;
+import com.crashlytics.android.Crashlytics;
+import io.fabric.sdk.android.Fabric;
 
 /**
  * Created by vincentchann on 07/08/16.
@@ -33,6 +36,7 @@ public class HomeActivity extends AppCompatActivity implements VCListListener {
     Attributes
      */
     private String TAG = "HomeActivity";
+    private int RequestCodeActivity = 1001;
 
     /*
    Callbacks
@@ -40,21 +44,38 @@ public class HomeActivity extends AppCompatActivity implements VCListListener {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        Fabric.with(this, new Crashlytics());
         setContentView(R.layout.activity_home);
-        setListView();
+        setListView(false);
         setActionBar();
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == RequestCodeActivity) {
+            setListView(true);
+            setActionBar();
+        }
     }
 
     protected void setActionBar() {
         ActionBar actionBar = getSupportActionBar();
         actionBar.setTitle(getString(R.string.play_now));
-        // TODO compter le nombre de stars
-        actionBar.setSubtitle(Html.fromHtml("<small>&nbsp;" + "Vous avez : " + "<strong>4 étoiles</strong>" + "</small>"));
+        actionBar.setSubtitle(Html.fromHtml("<small>&nbsp;" + "Vous avez : " + "<strong>" +
+                StarsManager.getStarsCount(this) + " étoiles</strong>" + "</small>"));
     }
 
-    protected void setListView() {
+    protected void setListView(boolean reload) {
         VCListView listView = (VCListView) findViewById(R.id.list_view);
-        listView.initData(1, getDataViews(), this);
+        if (reload) {
+            if (listView.getAdapter() != null) {
+                listView.getAdapter().notifyDataSetChanged();
+            }
+        }
+        else {
+            listView.initData(1, getDataViews(), this);
+        }
     }
 
     protected List<VCDataView> getDataViews() {
@@ -76,7 +97,7 @@ public class HomeActivity extends AppCompatActivity implements VCListListener {
                 public void onClick(View view) {
                     Intent intent = new Intent(HomeActivity.this, SudokuActivity.class);
                     intent.putExtra(Board.BUNDLE_KEY_BOARD, dataView.board);
-                    startActivity(intent);
+                    startActivityForResult(intent, RequestCodeActivity);
                 }
             });
 
@@ -92,8 +113,8 @@ public class HomeActivity extends AppCompatActivity implements VCListListener {
                 }
             }
             TextView subtitleView = (TextView) itemView.findViewById(R.id.cell_subtitle);
-            subtitleView.setText(getString(R.string.progress) + " " + progress + "% \n"
-                    + getString(R.string.value) + " " + dataView.board.difficulty + " " + getString(R.string.stars));
+            subtitleView.setText(Html.fromHtml(getString(R.string.progress) + " <strong>" + progress + "%</strong><br/>"
+                    + getString(R.string.value) + " " + dataView.board.difficulty + " " + getString(R.string.stars)));
 
             RatingBar ratingView = (RatingBar) itemView.findViewById(R.id.cell_rating);
             ratingView.setRating(dataView.board.difficulty);

@@ -2,7 +2,7 @@
 	"boards":[
 		{
 			"idx":1,
-			"title":"Chat apprivoisé",
+			"title":"Vaincre Chat apprivoisé",
 			"icon":"bronze.png",
 			"difficulty":1,
 			"board": 
@@ -18,7 +18,7 @@
 		},
 		{
 			"idx":2,
-			"title":"Tigre des savanes",
+			"title":"Vaincre Tigre des savanes",
 			"icon":"platinium.png",
 			"difficulty":2,
 			"board": 

@@ -1,10 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="colorPrimary">#56789A</color>
-    <color name="colorPrimaryDark">#44607b</color>
-    <color name="colorAccent">#56789A</color>
+    <color name="colorPrimary">#7BACB3</color>
+    <color name="colorPrimaryDark">#6e9aa1</color>
+    <color name="colorAccent">#7BACB3</color>
     <color name="defaultBackground">#ffffff</color>
-
 
     <!-- board -->
     <color name="colorBoardBorder">#22666666</color>
@@ -14,9 +13,18 @@
     <color name="colorTextBlack">#333333</color>
 
     <!-- keyboard -->
-    <color name="colorPrimaryTranslucent">#7756789A</color>
-    <color name="colorPrimaryDarkTranslucent">#7744607b</color>
-    <color name="colorPrimaryHighTranslucent">#2256789A</color>
-    <color name="colorPrimaryDarkHighTranslucent">#2244607b</color>
+    <color name="colorPrimaryTranslucent">#777BACB3</color>
+    <color name="colorPrimaryHighTranslucent">#227BACB3</color>
+
+    <color name="colorPrimaryDarkTranslucent">#776e9aa1</color>
+    <color name="colorPrimaryDarkHighTranslucent">#226e9aa1</color>
+
+    <color name="colorButtonLockedSelected">#ff7BACB3</color>
+    <color name="colorButtonSelected">#aa7BACB3</color>
+    <color name="colorButtonLockedHighlighted">#557BACB3</color>
+    <color name="colorButtonHighlighted">#327BACB3</color>
+    <color name="colorButtonError">#33b82f2f</color>
+    <color name="colorButtonLockedError">#77b82f2f</color>
+    <color name="colorButtonLocked">#22888888</color>
 
 </resources>

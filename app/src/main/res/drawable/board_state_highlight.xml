@@ -8,7 +8,7 @@
                 android:color="@color/colorBoardBorder"
                 android:width="@dimen/board_stroke_width"/>
             <solid
-                android:color="#4456789A"/>
+                android:color="@color/colorButtonHighlighted"/>
         </shape>
     </item>
 
@@ -19,7 +19,7 @@
                 android:color="@color/colorBoardBorder"
                 android:width="@dimen/board_stroke_width"/>
             <solid
-                android:color="#3256789A"/>
+                android:color="@color/colorButtonHighlighted"/>
         </shape>
     </item>
 

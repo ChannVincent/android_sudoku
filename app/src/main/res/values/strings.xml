@@ -5,4 +5,9 @@
     <string name="value">Valeur : </string>
     <string name="progress">Progression : </string>
     <string name="stars">étoiles</string>
+    <string name="in_construction">En cours de construction</string>
+
+    <string name="victory">Victoire !</string>
+    <string name="you_have_won_x_stars">Vous avez gagné %s étoiles</string>
+    <string name="you_have_x_stars">Vous avez : %s étoiles</string>
 </resources>
